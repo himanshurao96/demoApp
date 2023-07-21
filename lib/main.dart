@@ -4,6 +4,9 @@ void main() {
   runApp(MaterialApp(
     title: "My App",
     home: HomePage(),
+    theme: ThemeData(
+      primarySwatch: Colors.purple,
+    ),
   ));
 }
 
@@ -11,33 +14,59 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("My App"),
-      ),
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Container(
-            padding: const EdgeInsets.all(8),
-            width: 100,
-            height: 100,
-            color: Colors.green,
+        appBar: AppBar(
+          title: Text("My App"),
+        ),
+        body:Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Card(
+            child: Column(children: [
+              Image.asset(
+                
+              ),
+            ]),
+            
           ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            width: 100,
-            height: 100,
-            color: Colors.yellow,
+
+        ),);
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              // DrawerHeader(
+              //   child: Text(
+              //     "Hi I am drawer",
+              //     style: TextStyle(color: Colors.white),
+              //   ),
+              //   decoration: BoxDecoration(color: Colors.indigo),
+              // ),
+              UserAccountsDrawerHeader(
+                accountName: Text("Rahul Sharma"),
+                accountEmail: Text("rahul23@gmail.com"),
+                currentAccountPicture: CircleAvatar(
+                  backgroundImage: NetworkImage(
+                      "https://images.unsplash.com/photo-1615109398623-88346a601842?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80"),
+                ),
+              ),
+
+              ListTile(
+                leading: Icon(Icons.person),
+                title: Text("Account"),
+                subtitle: Text("Personal"),
+                trailing: Icon(Icons.edit),
+              ),
+              ListTile(
+                leading: Icon(Icons.email),
+                title: Text("E-mail"),
+                subtitle: Text("hh@gmail.com"),
+                trailing: Icon(Icons.send),
+              )
+            ],
           ),
-          Container(
-            padding: const EdgeInsets.all(8),
-            width: 100,
-            height: 100,
-            color: Colors.red,
-          )
-        ],
-      ),
-    );
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          child: Icon(Icons.edit),
+        ));
   }
 }
