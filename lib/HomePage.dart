@@ -2,18 +2,7 @@ import 'package:flutter/material.dart';
 import 'bg_image.dart';
 import 'drawer.dart';
 
-class HomePage extends StatefulWidget {
-  @override
-  State<HomePage> createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
-  String name = "";
-  @override
-  void initState() {
-    super.initState();
-  }
-
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,34 +15,6 @@ class _HomePageState extends State<HomePage> {
             child: Card(
               child: Column(children: [
                 BGImage(),
-                SizedBox(
-                  height: 20,
-                ),
-                Text(
-                  "Hi $name",
-                  style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    children: [
-                      TextFormField(
-                        keyboardType: TextInputType.text,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: "Enter Username ",
-                          labelText: "Username",
-                        ),
-                        onChanged: ((value) {
-                          name = value;
-                        }),
-                      ),
-                    ],
-                  ),
-                ),
               ]),
             ),
           ),
@@ -61,7 +22,7 @@ class _HomePageState extends State<HomePage> {
         drawer: MyDrawer(),
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
-          child: Icon(Icons.refresh),
+          child: Icon(Icons.add),
         ));
   }
 }

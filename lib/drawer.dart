@@ -27,13 +27,19 @@ class MyDrawer extends StatelessWidget {
             leading: Icon(Icons.person),
             title: Text("Account"),
             subtitle: Text("Personal"),
-            trailing: Icon(Icons.edit),
           ),
           ListTile(
             leading: Icon(Icons.email),
             title: Text("E-mail"),
             subtitle: Text("hh@gmail.com"),
-            trailing: Icon(Icons.send),
+          ),
+          ListTile(
+            leading: Icon(Icons.book),
+            title: Text("About Us"),
+          ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text("LogOut"),
           )
         ],
       ),
