@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_1/Constants.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -16,7 +17,8 @@ class _LoginPageState extends State<LoginPage> {
       changeButton = true;
     });
     await Future.delayed(Duration(seconds: 1));
-    await Navigator.pushNamed(context, "/home");
+    Constants.prefs?.setBool("loggedIn", true);
+    await Navigator.pushReplacementNamed(context, "/home");
     setState(() {
       changeButton = false;
     });
