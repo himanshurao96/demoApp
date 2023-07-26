@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_1/Constants.dart';
-// import 'package:http/http.dart' as http;
 // import 'dart:convert';
-import 'drawer.dart';
+import 'Drawer/drawer.dart';
 
 class HomePage extends StatelessWidget {
   List<String> imagesData = [
@@ -20,13 +19,13 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text("My App"),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.logout),
-            onPressed: () {
-              Constants.prefs?.setBool("loggedIn", false);
-              Navigator.pushReplacementNamed(context, "/login");
-            },
-          )
+          // IconButton(
+          //   icon: Icon(Icons.logout),
+          //   onPressed: () {
+          //     Constants.prefs?.setBool("loggedIn", false);
+          //     Navigator.pushReplacementNamed(context, "/login");
+          //   },
+          // )
         ],
       ),
       body: Container(
