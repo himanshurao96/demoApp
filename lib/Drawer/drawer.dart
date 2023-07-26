@@ -3,7 +3,7 @@ import 'package:flutter_1/Drawer/AboutUs.dart';
 import 'package:flutter_1/Drawer/AccountScreen.dart';
 import 'package:flutter_1/Drawer/Help.dart';
 import 'package:flutter_1/Drawer/Setting.dart';
-import 'package:flutter_1/login_page.dart';
+import '../Constants.dart';
 
 class MyDrawer extends StatelessWidget {
   @override
@@ -12,13 +12,6 @@ class MyDrawer extends StatelessWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
-          // DrawerHeader(
-          //   child: Text(
-          //     "Hi I am drawer",
-          //     style: TextStyle(color: Colors.white),
-          //   ),
-          //   decoration: BoxDecoration(color: Colors.indigo),
-          // ),
           UserAccountsDrawerHeader(
             accountName: Text("Rahul Sharma"),
             accountEmail: Text("rahul23@gmail.com"),
@@ -101,11 +94,8 @@ class MyDrawer extends StatelessWidget {
             title: Text("LogOut"),
             trailing: Icon(Icons.chevron_right),
             onTap: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => LoginPage(),
-                ),
-              );
+              Constants.prefs?.setBool("loggedIn", false);
+              Navigator.pushReplacementNamed(context, "/login");
             },
           ),
         ],
