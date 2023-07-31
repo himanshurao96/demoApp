@@ -1,47 +1,94 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-// import 'package:flutter_1/Constants.dart';
-// import 'dart:convert';
+import 'package:flutter_1/Modal/CatalogModal.dart';
+import 'package:http/http.dart' as http;
 import 'Drawer/drawer.dart';
 
-class HomePage extends StatelessWidget {
-  List<String> imagesData = [
-    'https://cdn.pixabay.com/photo/2015/12/01/20/28/road-1072823_1280.jpg',
-    'https://cdn.pixabay.com/photo/2018/05/12/19/20/mosaic-3394375_1280.jpg',
-    'https://cdn.pixabay.com/photo/2018/03/24/08/56/colorful-3256055_1280.jpg',
-    'https://cdn.pixabay.com/photo/2018/01/14/23/12/nature-3082832_1280.jpg',
-    'https://cdn.pixabay.com/photo/2013/04/04/12/34/mountains-100367_1280.jpg',
-    'https://cdn.pixabay.com/photo/2016/10/22/17/46/mountains-1761292_1280.jpg',
-  ];
+class HomePage extends StatefulWidget {
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  List<Product> products = [];
+
+  Future<List<Product>> getData() async {
+    final respose = await http.get(Uri.parse('https://dummyjson.com/products'));
+
+    var data = jsonDecode(respose.body.toString());
+
+    if (respose.statusCode == 200) {
+      for (Map<String, dynamic> index in data) {
+        products.add(Product.fromJson(index));
+      }
+      return products;
+    } else {
+      return products;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("My App"),
-        actions: <Widget>[
-          // IconButton(
-          //   icon: Icon(Icons.logout),
-          //   onPressed: () {
-          //     Constants.prefs?.setBool("loggedIn", false);
-          //     Navigator.pushReplacementNamed(context, "/login");
-          //   },
-          // )
-        ],
+        actions: <Widget>[],
       ),
-      body: Container(
-        // decoration: BoxDecoration(
-        //   color: Colors.grey,
-        // ),
-        padding: const EdgeInsets.all(12),
-        child: GridView.builder(
-          itemCount: imagesData.length,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            crossAxisCount: 2,
-          ),
-          itemBuilder: (BuildContext context, int index) {
-            return Image.network(imagesData[index]);
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: FutureBuilder(
+          future: getData(),
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              return ListView.builder(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 15,
+                  horizontal: 10,
+                ),
+                itemCount: products.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 10,
+                      horizontal: 15,
+                    ),
+                    margin: const EdgeInsets.only(bottom: 10),
+                    height: 200,
+                    decoration: BoxDecoration(
+                      color: Colors.black12,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          getText(index, 'ID: ', products[index].id.toString()),
+                          getText(index, 'Name: ',
+                              products[index].title.toString()),
+                          getText(index, 'Description: ',
+                              products[index].description.toString()),
+                          getText(index, 'Price: ',
+                              products[index].price.toString()),
+                          getText(index, 'DiscountPercentage:',
+                              products[index].discountPercentage.toString()),
+                          getText(index, 'Rating: ',
+                              products[index].rating.toString()),
+                          getText(index, 'Stock : ',
+                              products[index].stock.toString()),
+                          getText(index, 'Brand: ',
+                              products[index].brand.toString()),
+                          getText(index, 'Category: ',
+                              products[index].category.toString()),
+                        ]),
+                  );
+                },
+              );
+            } else {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
           },
         ),
       ),
@@ -49,6 +96,26 @@ class HomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
         child: Icon(Icons.refresh),
+      ),
+    );
+  }
+
+  Text getText(int index, String fieldName, String content) {
+    return Text.rich(
+      TextSpan(
+        children: [
+          TextSpan(
+            text: fieldName,
+            style: (const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            )),
+          ),
+          TextSpan(
+            text: content,
+            style: (const TextStyle(fontSize: 16)),
+          ),
+        ],
       ),
     );
   }
